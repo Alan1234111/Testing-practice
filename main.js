@@ -21,54 +21,40 @@ const calculator = {
   },
 };
 
-function caesarCipher(text, key) {
-  let s = "";
-  let dictionary = [
-    "a",
-    "b",
-    "c",
-    "d",
-    "e",
-    " f",
-    "g",
-    "h",
-    "i",
-    "j",
-    "k",
-    "l",
-    "m",
-    "n",
-    "o",
-    "p",
-    "q",
-    "r",
-    "s",
-    "t",
-    "u",
-    "v",
-    "w",
-    "x",
-    "y",
-    "z",
-  ];
-  let pos = key;
-
-  for (let i = 0; text.length; i++) {
-    for (let j = 0; j < dictionary.length; j++) {
-      if (text[i] === " ") {
-        s += "";
-        break;
-      }
-      if (text[i] === dictionary[j]) {
-        if (j + key > dictionary.length - 1) {
-          s += dictionary[j + key - dictionary.length];
-          break;
-        }
-      }
+function caesarCipher(str, key) {
+  let alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
+  let result = "";
+  let string = str.toLowerCase();
+  for (let i = 0; i < string.length; i++) {
+    if (string[i] !== " ") {
+      let index = alphabet.indexOf(string[i]);
+      result += alphabet[(index + key) % 26];
+    } else {
+      result += " ";
     }
   }
 
-  return s;
+  return result;
 }
 
-module.exports = { capitalize, reverseString, calculator, caesarCipher };
+function analyzeArray([...arr]) {
+  const obj = {
+    average: 0,
+    min: 0,
+    max: 0,
+    length: 0,
+  };
+
+  const sum = arr.reduce((cur, prev) => {
+    return cur + prev;
+  }, 0);
+
+  obj.average = sum / arr.length;
+  obj.min = Math.min(...arr);
+  obj.max = Math.max(...arr);
+  obj.length = arr.length;
+
+  return obj;
+}
+
+module.exports = {capitalize, reverseString, calculator, caesarCipher, analyzeArray};
